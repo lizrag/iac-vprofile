@@ -16,13 +16,13 @@ env:
     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     # S3 bucket for the Terraform state
-    BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE}}
+    BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE }}
     AWS_REGION: us-east-2
 
 jobs:
     terraform: 
         name: "Apply terraform code changes"
-        runs on: ubuntu-latest
+        runs-on: ubuntu-latest  # Changed 'runs on' to 'runs-on'
         defaults: 
             run:
                 shell: bash
@@ -31,7 +31,8 @@ jobs:
         steps: 
             - name: Checkout source code
               uses: actions/checkout@v2
-              - name: Setup Terraform with specified version on the runner
+
+            - name: Setup Terraform with specified version on the runner
               uses: hashicorp/setup-terraform@v2
               #with:
               #  terraform_version: 1.6.3
@@ -55,5 +56,6 @@ jobs:
      
             - name: Terraform plan status
               if: steps.plan.outcome == 'failure' 
-              run: exit 1     
+              run: exit 1
+
      
